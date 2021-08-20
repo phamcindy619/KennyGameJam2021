@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
-    public float moveLimiter = 0.7f;
+    // Player movement
+    public float moveSpeed = 5f;
     
-    private float h, v;
     private Rigidbody2D rb;
+    public Camera cam;
+
+    Vector2 movement;
+    Vector2 mousePos;
+
+    // Player shooting
+    public GameObject bulletPrefab;
+    public Transform spawnPoint;
+
+    public float bulletForce = 20f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,25 +27,28 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
+        if (Input.GetButtonDown("Fire1")) {
+            Shoot();
+        }
     }
 
-    private void FixedUpdate() {
-        // Moving diagonally
-        if (h != 0 && v != 0) {
-            // Limit diagonal movement speed
-            h *= moveLimiter;
-            v *= moveLimiter;
-        }
+    private void FixedUpdate() 
+    {
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
-        rb.velocity = new Vector2(h * speed, v * speed);
+        Vector2 lookDir = mousePos - rb.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+        rb.rotation = angle;
+    }
 
-        if (rb.velocity != Vector2.zero) {
-            float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-    }  
+    void Shoot() {
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, spawnPoint.rotation);
+        Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
+        rbBullet.AddForce(spawnPoint.up * bulletForce, ForceMode2D.Impulse);
+    }
 }
