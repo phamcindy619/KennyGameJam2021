@@ -19,11 +19,15 @@ public class PlayerController : MonoBehaviour
 
     public float bulletForce = 2f;
 
+    // Sounds
+    private AudioClip shootClip;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        shootClip = Resources.Load<AudioClip>("Audio/gunshot");
     }
 
     void Update()
@@ -53,6 +57,7 @@ public class PlayerController : MonoBehaviour
     void Shoot() {
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, spawnPoint.rotation);
         Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
+        SoundManager.instance.PlaySingle(shootClip);
         rbBullet.AddForce(spawnPoint.up * bulletForce, ForceMode2D.Impulse);
     }
 }

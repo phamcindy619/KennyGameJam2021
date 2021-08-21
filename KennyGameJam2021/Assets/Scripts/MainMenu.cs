@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    private AudioClip selectClip;
+    public AudioClip selectClip;
 
     void Start() {
         selectClip = Resources.Load<AudioClip>("Audio/mouse_click");

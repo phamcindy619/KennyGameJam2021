@@ -782,6 +782,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4376282770710078624, guid: 923b209643a351749a234b386e23353e, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376282770710078624, guid: 923b209643a351749a234b386e23353e, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 054471a44ec52354c807ab6efc84b307, type: 3}
     - target: {fileID: 4376282770710078627, guid: 923b209643a351749a234b386e23353e, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -952,6 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18db6fc0880ba2f469984df79df31571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectClip: {fileID: 0}
 --- !u!1 &2016381776
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,11 +24,13 @@ public class GameManager : MonoBehaviour
     private AudioClip youWinClip;
     private AudioClip gameOverClip;
     private AudioClip selectClip;
+    private AudioClip hitClip;
 
     void Start() {
         youWinClip = Resources.Load<AudioClip>("Audio/you_win");
         gameOverClip = Resources.Load<AudioClip>("Audio/game_over");
         selectClip = Resources.Load<AudioClip>("Audio/mouse_click");
+        hitClip = Resources.Load<AudioClip>("Audio/player_hit");
     }
 
     void Awake() {
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerHit() {
         if (health > 0) {
+            SoundManager.instance.PlaySingle(hitClip);
             health--;
             hearts.transform.GetChild(health).gameObject.SetActive(false);
         }
