@@ -8,7 +8,7 @@ public class EnemyBullet : MonoBehaviour
         Destroy(gameObject);
 
         if (other.gameObject.tag == "Player") {
-            GameManager.Instance.PlayerHit();
+            GameManager.instance.PlayerHit();
         }
     }
 

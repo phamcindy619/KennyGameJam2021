@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetButtonDown("Fire1")) {
+        if (GameManager.instance.isPlaying && Input.GetButtonDown("Fire1")) {
             Shoot();
         }
     }

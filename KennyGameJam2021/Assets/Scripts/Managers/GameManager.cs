@@ -5,20 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance;
-    public static GameManager Instance {
-        get {
-            if (_instance == null) {
-                Debug.Log("GameManager is NULL!");
-            }
-            return _instance;
-        }
-    }
+    public static GameManager instance = null;
 
     public int health = 3;
     public GameObject hearts;
     public GameObject gameOverPanel;
     public GameObject winPanel;
+
+    public bool isPlaying = true;
 
     // Sounds
     private AudioClip youWinClip;
@@ -34,16 +28,21 @@ public class GameManager : MonoBehaviour
     }
 
     void Awake() {
-        _instance = this;
+        if (instance == null) {
+            instance = this;
+        }
+        else if (instance != this) {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0) {
+        if (isPlaying && health <= 0) {
             GameOver();
         }
-        else if (Enemies.numEnemies <= 0) {
+        else if (isPlaying && Enemies.numEnemies <= 0) {
             Win();
         }
     }
@@ -59,11 +58,13 @@ public class GameManager : MonoBehaviour
     void GameOver() {
         gameOverPanel.SetActive(true);
         SoundManager.instance.PlaySingle(gameOverClip);
+        isPlaying = false;
     }
 
     void Win() {
         winPanel.SetActive(true);
         SoundManager.instance.PlaySingle(youWinClip);
+        isPlaying = false;
     }
 
     public void BackToMainMenu() {
