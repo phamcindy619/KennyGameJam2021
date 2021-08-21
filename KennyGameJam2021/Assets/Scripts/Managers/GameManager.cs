@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject winPanel;
 
-    public bool isPlaying = true;
+    public bool isPlaying;
 
     // Sounds
     private AudioClip youWinClip;
@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
         else if (instance != this) {
             Destroy(gameObject);
         }
+
+        isPlaying = true;
     }
 
     // Update is called once per frame

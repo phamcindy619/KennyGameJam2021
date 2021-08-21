@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform spawnPoint;
 
-    public float bulletForce = 2f;
+    public float bulletForce = 20f;
 
     // Sounds
     private AudioClip shootClip;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        shootClip = Resources.Load<AudioClip>("Audio/gunshot");
+        shootClip = Resources.Load<AudioClip>("Audio/player_gunshot");
     }
 
     void Update()

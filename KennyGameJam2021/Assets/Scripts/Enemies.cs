@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemies : MonoBehaviour
 {
-    public static int numEnemies = 15;
+    public static int numEnemies;
     private List<GameObject> enemies;
 
     public GameObject enemyPrefab;
@@ -14,6 +14,7 @@ public class Enemies : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        numEnemies = 15;
         enemies = new List<GameObject>();
         SpawnEnemies(Vector3.zero, 4.5f);
         InvokeRepeating("RandomShoot", 1.0f, 1.0f);
@@ -49,8 +50,10 @@ public class Enemies : MonoBehaviour
     }
 
     void RandomShoot() {
-        if (numEnemies > 0) {
+        if (GameManager.instance.isPlaying || numEnemies > 0) {
             int rand = Random.Range(0, numEnemies - 1);
+            int angle = Random.Range(-10, 10);
+            enemies[rand].transform.Rotate(0, 0, angle);
             enemies[rand].GetComponent<EnemyController>().Shoot();
         }
     }

@@ -10,11 +10,11 @@ public class PlayerBullet : MonoBehaviour
         enemies = GameObject.Find("Enemies").GetComponent<Enemies>();
     }
 
-    void OnCollisionEnter2D(Collision2D col) {
+    void OnTriggerEnter2D(Collider2D other) {
         Destroy(gameObject);
 
-        if (col.gameObject.tag == "Enemy") {
-            enemies.EnemyDie(col.gameObject);
+        if (other.gameObject.tag == "Enemy") {
+            enemies.EnemyDie(other.gameObject);
         }
     }
 
