@@ -50,7 +50,7 @@ public class Enemies : MonoBehaviour
     }
 
     void RandomShoot() {
-        if (GameManager.instance.isPlaying || numEnemies > 0) {
+        if (GameManager.instance.isPlaying && numEnemies > 0) {
             int rand = Random.Range(0, numEnemies - 1);
             int angle = Random.Range(-10, 10);
             enemies[rand].transform.Rotate(0, 0, angle);

@@ -11,6 +11,10 @@ public class SoundManager : MonoBehaviour
 
     public static SoundManager instance = null;
 
+    // Toggle audio
+    [SerializeField] Toggle audioToggle;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,23 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void OnEnable() {
+        SceneManager.sceneLoaded += OnNewScene;
+    }
+
+    void OnDisable() {
+        SceneManager.sceneLoaded -= OnNewScene;
+    }
+
+    void OnNewScene(Scene scene, LoadSceneMode mode) {
+        audioToggle = GameObject.Find("Audio Toggle").GetComponent<Toggle>();
+
+        // Audio is off
+        if (AudioListener.volume == 0) {
+            audioToggle.isOn = false;
+        }
+    }
+
     public void PlaySingle(AudioClip clip) {
         sfxSource.clip = clip;
         sfxSource.Play();
@@ -35,4 +56,16 @@ public class SoundManager : MonoBehaviour
     public void PlayMusic() {
         bgmSource.Play();
     }
+
+    public void ToggleAudio(bool isOn) {
+        if (isOn) {
+            AudioListener.volume = 1;
+            bgmSource.UnPause();
+        }
+        else {
+            AudioListener.volume = 0;
+            bgmSource.Pause();
+        }
+    }
+
 }
