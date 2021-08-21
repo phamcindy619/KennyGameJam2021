@@ -20,11 +20,15 @@ public class GameManager : MonoBehaviour
     private AudioClip selectClip;
     private AudioClip hitClip;
 
+    // Cursor
+    private Texture2D cursor;
+
     void Start() {
         youWinClip = Resources.Load<AudioClip>("Audio/you_win");
         gameOverClip = Resources.Load<AudioClip>("Audio/game_over");
         selectClip = Resources.Load<AudioClip>("Audio/mouse_click");
         hitClip = Resources.Load<AudioClip>("Audio/player_hit");
+        cursor = Resources.Load<Texture2D>("Sprites/cursor");
     }
 
     void Awake() {
@@ -57,12 +61,14 @@ public class GameManager : MonoBehaviour
 
     void GameOver() {
         gameOverPanel.SetActive(true);
+        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
         SoundManager.instance.PlaySingle(gameOverClip);
         isPlaying = false;
     }
 
     void Win() {
         winPanel.SetActive(true);
+        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
         SoundManager.instance.PlaySingle(youWinClip);
         isPlaying = false;
     }

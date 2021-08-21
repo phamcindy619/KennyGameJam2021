@@ -8,7 +8,8 @@ public class Enemies : MonoBehaviour
     private List<GameObject> enemies;
 
     public GameObject enemyPrefab;
-    public float shootTimer = 2f;
+
+    public float rotationSpeed = 50f;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,7 +21,7 @@ public class Enemies : MonoBehaviour
 
     void Update()
     {
-        gameObject.transform.RotateAround(Vector3.zero, Vector3.back, 20 * Time.deltaTime);
+        gameObject.transform.RotateAround(Vector3.zero, Vector3.back, rotationSpeed * Time.deltaTime);
     }
 
     void SpawnEnemies(Vector3 center, float radius) {
