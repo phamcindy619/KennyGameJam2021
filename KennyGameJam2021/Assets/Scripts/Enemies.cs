@@ -11,11 +11,16 @@ public class Enemies : MonoBehaviour
     public float shootTimer = 2f;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         enemies = new List<GameObject>();
         SpawnEnemies(Vector3.zero, 4.5f);
-        InvokeRepeating("RandomShoot", 1.0f, 2.0f);
+        InvokeRepeating("RandomShoot", 1.0f, 1.0f);
+    }
+
+    void Update()
+    {
+        gameObject.transform.RotateAround(Vector3.zero, Vector3.back, 20 * Time.deltaTime);
     }
 
     void SpawnEnemies(Vector3 center, float radius) {
@@ -36,8 +41,16 @@ public class Enemies : MonoBehaviour
         }
     }
 
+    public void EnemyDie(GameObject enemy) {
+        numEnemies--;
+        enemies.Remove(enemy);
+        enemy.SetActive(false);
+    }
+
     void RandomShoot() {
-        int rand = Random.Range(0, numEnemies);
-        enemies[rand].GetComponent<EnemyController>().Shoot();
+        if (numEnemies > 0) {
+            int rand = Random.Range(0, numEnemies - 1);
+            enemies[rand].GetComponent<EnemyController>().Shoot();
+        }
     }
 }

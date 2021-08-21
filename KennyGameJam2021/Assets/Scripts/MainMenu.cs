@@ -6,23 +6,19 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-    
-    }
+    private AudioClip selectClip;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Start() {
+        selectClip = Resources.Load<AudioClip>("Audio/mouse_click");
     }
 
     public void PlayGame() {
+        SoundManager.instance.PlaySingle(selectClip);
         SceneManager.LoadScene("Game");
     }
 
     public void QuitGame() {
+        SoundManager.instance.PlaySingle(selectClip);
         Application.Quit();
     }
 }

@@ -20,6 +20,17 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject winPanel;
 
+    // Sounds
+    private AudioClip youWinClip;
+    private AudioClip gameOverClip;
+    private AudioClip selectClip;
+
+    void Start() {
+        youWinClip = Resources.Load<AudioClip>("Audio/you_win");
+        gameOverClip = Resources.Load<AudioClip>("Audio/game_over");
+        selectClip = Resources.Load<AudioClip>("Audio/mouse_click");
+    }
+
     void Awake() {
         _instance = this;
     }
@@ -36,22 +47,26 @@ public class GameManager : MonoBehaviour
     }
 
     public void PlayerHit() {
-        health--;
-        hearts.transform.GetChild(health).gameObject.SetActive(false);
+        if (health > 0) {
+            health--;
+            hearts.transform.GetChild(health).gameObject.SetActive(false);
+        }
     }
 
     void GameOver() {
-        Time.timeScale = 0;
         gameOverPanel.SetActive(true);
+        SoundManager.instance.PlaySingle(gameOverClip);
     }
 
     void Win() {
-        Time.timeScale = 0;
         winPanel.SetActive(true);
+        SoundManager.instance.PlaySingle(youWinClip);
     }
 
     public void BackToMainMenu() {
-        Time.timeScale = 1;
+        winPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        SoundManager.instance.PlaySingle(selectClip);
         SceneManager.LoadScene("MainMenu");
     }
 }
