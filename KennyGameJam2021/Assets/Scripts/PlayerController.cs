@@ -17,12 +17,13 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform spawnPoint;
 
-    public float bulletForce = 20f;
+    public float bulletForce = 2f;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     void Update()
@@ -39,7 +40,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        Vector3 newPos = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
+        if (newPos.magnitude < 4f) {
+            rb.MovePosition(newPos);
+        }
 
         Vector2 lookDir = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
